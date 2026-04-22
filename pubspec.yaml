@@ -38,6 +38,7 @@ dependencies:
   http:
   shared_preferences:
   flutter_dotenv:
+  auto_size_text:
 
 dev_dependencies:
   flutter_test:
@@ -67,6 +68,8 @@ flutter:
   #   - images/a_dot_ham.jpeg
   assets:
     - .env
+    - assets/images/
+    - assets/icons/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

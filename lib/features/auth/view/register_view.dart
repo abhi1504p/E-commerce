@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shoppingapp/core/constant/app_snackbar.dart';
-import 'package:shoppingapp/core/utils/button_widget.dart';
-import 'package:shoppingapp/core/utils/custom_text_field.dart';
-import 'package:shoppingapp/features/auth/viewmodel/register_provider.dart';
+import 'package:shoppingapp/core/widgets/button_widget.dart';
+import 'package:shoppingapp/core/widgets/custom_text_field.dart';
+import 'package:shoppingapp/routes/app_routes.dart';
+
+import '../../../core/widgets/custom_appbar.dart';
+import '../provider/register_provider.dart';
 
 class RegisterView extends StatefulWidget {
   const RegisterView({super.key});
@@ -21,7 +24,7 @@ class _RegisterViewState extends State<RegisterView> {
     final provider = context.watch<RegisterProvider>();
 
     return Scaffold(
-      appBar: AppBar(backgroundColor: Colors.red, title: Text("Register")),
+      appBar: PreferredSize(preferredSize: Size.fromHeight(50), child: CustomAppBar(title: "Register")),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(15.0),
@@ -56,6 +59,15 @@ class _RegisterViewState extends State<RegisterView> {
                     }
                   },
                 ),
+
+              Row(mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text("Do the Login"),
+                  TextButton(onPressed: () {
+                    Navigator.pushNamed(context, AppRoutes.login);
+                  }, child: Text("Login"),)
+                ],
+              )
             ],
           ),
         ),

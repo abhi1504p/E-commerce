@@ -6,5 +6,5 @@ class ApiConstant {
 
   // endpoints
   static const String register = "/users/register";
-  static const String login = "/login";
+  static const String login = "/users/login";
 }

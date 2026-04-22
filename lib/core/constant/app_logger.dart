@@ -1,15 +1,15 @@
-import 'dart:developer' as developer;
 import 'package:flutter/foundation.dart';
 
 enum LogLevel { debug, info, warning, error }
 
 class AppLogger {
-  static bool _enabled = true; // turn off in production if needed
+  static bool _enabled = true;
 
   static void enableLogs(bool value) {
     _enabled = value;
   }
 
+  // ===== CORE LOGGER =====
   static void _log(
       String message, {
         LogLevel level = LogLevel.debug,
@@ -25,35 +25,35 @@ class AppLogger {
     final formattedMessage =
         "[$time] [$levelStr] [$tag] $message";
 
+    final coloredMessage = _applyColor(formattedMessage, level);
+
     if (kDebugMode) {
-      // Console print (clean readable)
-      debugPrint(formattedMessage);
+      debugPrint(coloredMessage);
     }
 
-    // Developer log (visible in DevTools)
-    developer.log(
-      message,
-      name: tag,
-      error: error,
-      stackTrace: stackTrace,
-      level: _mapLogLevel(level),
-    );
+    // Optional: show stacktrace only for errors
+    if (level == LogLevel.error && stackTrace != null) {
+      debugPrint(stackTrace.toString());
+    }
   }
 
-  static int _mapLogLevel(LogLevel level) {
+  // ===== COLOR HANDLER =====
+  static String _applyColor(String message, LogLevel level) {
+    const reset = '\x1B[0m';
+
     switch (level) {
       case LogLevel.debug:
-        return 500;
+        return '\x1B[37m$message$reset'; // White
       case LogLevel.info:
-        return 800;
+        return '\x1B[34m$message$reset'; // Blue
       case LogLevel.warning:
-        return 900;
+        return '\x1B[33m$message$reset'; // Yellow
       case LogLevel.error:
-        return 1000;
+        return '\x1B[31m$message$reset'; // Red
     }
   }
 
-  // ===== Public methods =====
+  // ===== PUBLIC METHODS =====
 
   static void d(String message, {String tag = "DEBUG"}) {
     _log(message, level: LogLevel.debug, tag: tag);

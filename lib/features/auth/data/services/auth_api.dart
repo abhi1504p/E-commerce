@@ -37,7 +37,7 @@ class AuthApi {
       await prefs.setBool("isLoggedIn", true);
       return true;
     } else {
-      throw Exception("Registration failed: ${response.body}");
+      throw Exception("Login failed: ${response.body}");
     }
   }
 }
